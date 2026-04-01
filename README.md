@@ -62,7 +62,10 @@ Status do Projeto
 # Em desenvolvimento
 
 # Equipe
-Vinícius Freitas – Gerente de Projeto/Scrum Master
+Vinícius Freitas – Gerente de Projeto/Scrum Master/Back-End
+
 Heitor Cunha – Front-end
+
 Davi Gadelha – Back-end
+
 Pedro Regas – UX/UI
