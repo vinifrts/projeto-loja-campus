@@ -2,7 +2,7 @@
 Plataforma de e-commerce desenvolvida para a Lojinha do Campus da Universidade de Fortaleza, com funcionalidades de catálogo de produtos, carrinho de compras e gerenciamento administrativo.
 
 
-# Lojinha do Campus - UNIFOR
+# Lojinha do Campus UNIFOR
 
 Sistema web de e-commerce desenvolvido para a Lojinha do Campus da Universidade de Fortaleza, com o objetivo de digitalizar a venda de produtos institucionais, como blusas, mochilas e itens acadêmicos.
 
@@ -59,7 +59,7 @@ Carrinho simples
 Finalização de pedido
 Status do Projeto
 
-# Em desenvolvimento
+
 
 # Equipe
 Vinícius Freitas – Gerente de Projeto/Scrum Master/Back-End
@@ -68,4 +68,4 @@ Heitor Cunha – Front-end
 
 Davi Gadelha – Back-end
 
-Pedro Regas – UX/UI
+Pedro Regas – UI/UX
