@@ -20,6 +20,7 @@ Alunos da Universidade de Fortaleza
 Professores
 Funcionários
 Visitantes do campus
+
 # Tecnologias Utilizadas
 
 Front-end
@@ -27,11 +28,13 @@ Front-end
 - HTML
 - CSS
 - JavaScript
+- Blade
 
 Back-end
 
-- Node.js
-
+- PHP
+- Laravel
+  
 Banco de Dados
 
 - MySQL
@@ -48,17 +51,7 @@ Painel administrativo
 
 # Arquitetura
 
-O sistema segue o modelo cliente-servidor:
-
-Frontend → Backend (API REST) → Banco de Dados
-
-MVP (Produto Mínimo Viável)
-Cadastro e login
-Listagem de produtos
-Carrinho simples
-Finalização de pedido
-Status do Projeto
-
+O sistema segue o padrão MVC (Model-View-Controller) utilizando o framework Laravel.
 
 
 # Equipe
@@ -66,6 +59,6 @@ Vinícius Freitas – Gerente de Projeto/Scrum Master/Back-End
 
 Heitor Cunha – Front-end
 
-Davi Gadelha – Back-end
+Davi Gadelha – Back-end/Quality Assurance (QA)
 
 Pedro Regas – UI/UX
