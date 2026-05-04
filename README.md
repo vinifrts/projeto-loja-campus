@@ -62,3 +62,7 @@ Heitor Cunha – Front-end
 Davi Gadelha – Back-end/Quality Assurance (QA)
 
 Pedro Regas – UI/UX
+
+
+# Status do projeto
+🚧 Em desenvolvimento
