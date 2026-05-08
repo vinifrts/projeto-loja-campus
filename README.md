@@ -25,9 +25,9 @@ Visitantes do campus
 
 Front-end
 
-- HTML
-- CSS
+- React + Vite
 - JavaScript
+- Tailwind CSS
 - Blade
 
 Back-end
