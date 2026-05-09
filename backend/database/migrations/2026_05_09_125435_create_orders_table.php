@@ -34,7 +34,7 @@ return new class extends Migration
                 'delivery'
             ]);
 
-            $table->enum('status_pedido', [
+            $table->enum('status_order', [
                 'pendente',
                 'pago',
                 'enviado',
