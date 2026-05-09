@@ -15,10 +15,18 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('cpf', 14)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+
+            $table->enum('link_type', [ 'interno', 'externo' ]);
+            $table->enum('access_level', [ 'aluno', 'docente', 'visitante' ])->default('visitante');
+            $table->boolean('active')->default(true);
+            $table->timestamp('registration_date')->useCurrent();
+
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
