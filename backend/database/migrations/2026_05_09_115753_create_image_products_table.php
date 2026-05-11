@@ -18,7 +18,7 @@ return new class extends Migration
                 ->constrained('products')
                 ->onDelete('cascade');
             
-            $table->string('url_imagem');
+            $table->string('url_image');
             $table->string('subtitle')->nullable();
             $table->boolean('principal')->default(false);
             $table->timestamps();
