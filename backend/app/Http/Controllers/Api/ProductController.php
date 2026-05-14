@@ -5,20 +5,80 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with([
+        $query = Product::with([
             'category',
             'sizes'
-        ])->paginate(10);
+        ]);
+
+        if ($request->filled('search')) {
+
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('category')) {
+
+            $query->where(
+                'category_id',
+                $request->category
+            );
+        }
+
+        if ($request->filled('min_price')) {
+            $query->where(
+                'price',
+                '>=',
+                $request->min_price
+            );
+        }
+
+        if ($request->filled('max_price')) {
+            $query->where(
+                'price',
+                '<=',
+                $request->max_price
+            );
+        }
+
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'newest':
+                    $query->latest();
+                    break;
+                default:
+                    $query->latest();
+                    break;
+            }
+        } else {
+            $query->latest();
+        }
+
+        $products = $query->paginate(10);
 
         return response()->json([
             'success' => true,
+            'filters' => [
+                'search' => $request->search,
+                'category' => $request->category,
+                'min_price' => $request->min_price,
+                'max_price' => $request->max_price,
+                'sort' => $request->sort
+            ],
 
-            'data' => $products
+            'data' => ProductResource::collection($products)
+
         ]);
     }
 
@@ -32,20 +92,37 @@ class ProductController extends Controller
         return response()->json([
             'success' => true,
 
-            'data' => $product
+            'data' => new ProductResource($product)
         ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
+
             'name' => ['required'],
 
-            'description' => ['required'],
+            'description_short' => [
+                'required',
+                'string',
+                'max:255'
+            ],
+
+            'description_long' => [
+                'required',
+                'string'
+            ],
 
             'price' => ['required', 'numeric'],
 
             'stock' => ['required', 'integer'],
+
+            'image' => [
+                'sometimes',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048'
+            ],
 
             'category_id' => [
                 'required',
@@ -53,24 +130,24 @@ class ProductController extends Controller
             ]
         ]);
 
-        $product = Product::create([
-            'name' => $request->name,
+        $data = $request->all();
 
-            'description' => $request->description,
+        // Upload imagem
+        if ($request->hasFile('image')) {
 
-            'price' => $request->price,
+            $data['image'] = $request
+                ->file('image')
+                ->store('products', 'public');
+        }
 
-            'stock' => $request->stock,
-
-            'category_id' => $request->category_id
-        ]);
+        $product = Product::create($data);
 
         return response()->json([
             'success' => true,
 
             'message' => 'Produto criado com sucesso',
 
-            'data' => $product
+            'data' => new ProductResource($product)
         ], 201);
     }
 
@@ -80,23 +157,53 @@ class ProductController extends Controller
     ) {
 
         $request->validate([
+
             'name' => ['sometimes'],
 
-            'description' => ['sometimes'],
+            'description_short' => [
+                'sometimes',
+                'string',
+                'max:255'
+            ],
+
+            'description_long' => [
+                'sometimes',
+                'string'
+            ],
 
             'price' => ['sometimes', 'numeric'],
+
+            'image' => [
+                'sometimes',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048'
+            ],
 
             'stock' => ['sometimes', 'integer']
         ]);
 
-        $product->update($request->all());
+        $data = $request->all();
+        if ($request->hasFile('image')) {
+            if ($product->image) {
+
+                Storage::disk('public')
+                    ->delete($product->image);
+            }
+
+            $data['image'] = $request
+                ->file('image')
+                ->store('products', 'public');
+        }
+
+        $product->update($data);
 
         return response()->json([
             'success' => true,
 
             'message' => 'Produto atualizado',
 
-            'data' => $product
+            'data' => new ProductResource($product)
         ]);
     }
 
