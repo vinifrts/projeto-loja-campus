@@ -6,8 +6,16 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['user_id', 'coupon_id', 'subtotal',
-'discount', 'freight', 'total' , 'type_delivery', 'status_order'])]
+#[Fillable([
+    'user_id',
+    'coupon_id',
+    'subtotal',
+    'discount',
+    'freight',
+    'total',
+    'type_delivery',
+    'status_order'
+])]
 class Order extends Model
 {
     use HasFactory;
@@ -28,14 +36,14 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function coupom()
+    public function coupon()
     {
         return $this->belongsTo(Coupon::class);
     }
 
-    public function itens()
+    public function items()
     {
-        return $this->hasMany(ItemOrder::class);
+        return $this->hasMany(ItemOrder::class, 'order_id');
     }
 
     public function payment()

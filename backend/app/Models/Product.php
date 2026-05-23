@@ -6,8 +6,16 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['category_id', 'name', 'description_short', 
-'description_long', 'stock', 'image', 'price', 'active'])]
+#[Fillable([
+    'category_id',
+    'name',
+    'description_short',
+    'description_long',
+    'stock',
+    'image',
+    'price',
+    'active'
+])]
 class Product extends Model
 {
     use HasFactory;
@@ -41,7 +49,7 @@ class Product extends Model
         return $this->hasMany(ItemOrder::class);
     }
 
-    public function itensCart()
+    public function cartItems()
     {
         return $this->hasMany(ItemCart::class);
     }

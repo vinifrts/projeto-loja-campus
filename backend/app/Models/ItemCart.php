@@ -19,9 +19,12 @@ class ItemCart extends Model
         ];
     }
 
-     public function cart()
+    public function cart()
     {
-        return $this->belongsTo(ShoppingCart::class);
+        return $this->belongsTo(
+            ShoppingCart::class,
+            'cart_id'
+        );
     }
 
     public function product()

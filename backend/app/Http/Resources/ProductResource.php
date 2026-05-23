@@ -44,7 +44,6 @@ class ProductResource extends JsonResource
             }),
 
             'created_at' => $this->created_at?->format('Y-m-d H:i:s')
-
         ];
     }
 }
